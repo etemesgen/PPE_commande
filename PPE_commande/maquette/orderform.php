@@ -13,11 +13,11 @@
 <body>
 <?php
 
-  $produitLimite = "Votre choix doit être entre 0 et 10 unités maximum !";
+  $produitLimite = "Votre choix doit être entre 0 et 10 unités maximum ! </br>";
   $adresseVide = $panierVide = $adresse = $limiteTablettes = $limitePc = $limitePortable = "";
   $pc = $tablettes = $portable = 0;
 
-  if(isset($_POST['tablettes'], $_POST['pc'], $_POST['portable'], $_POST['adresse'])) {
+  if(isset($_POST['tablettes'], $_POST['pc'], $_POST['portable'], $_POST['adresse'])){
     $tablettes = $_POST['tablettes'];
     $pc = $_POST['pc'];
     $portable = $_POST['portable'];
@@ -30,17 +30,21 @@
       $_SESSION['time'] = date('d/m/Y, H:i');
       header('Location: validation_commande.php');
     }
+
     if(!validerPanier($tablettes,$pc,$portable)){
       $panierVide = "Votre panier est vide";
     }
 
   }
+
   function testProduit($produit){
     return (0 <= $produit && $produit <= 10);
   }
+
   function testAdresse($adresse){
     return $adresse !== "";
   }
+
   function validerPanier($tablettes, $pc, $portable){
     $verifPanierVide = $tablettes + $pc + $portable != 0;
     $verifLimite = testProduit($tablettes) && testProduit($pc) && testProduit($portable);
@@ -67,7 +71,10 @@
           <input type="number" name="tablettes" id="tablettes" value="<?php echo $tablettes;?>" autofocus autocomplete="off">
           <span class="error">
             <?php 
-              if(!testProduit($tablettes)){echo $produitLimite;}echo $panierVide;
+              if(!testProduit($tablettes)){
+                echo $produitLimite;
+              }
+                echo $panierVide;
             ?>
           </span>
         </td>
@@ -76,21 +83,37 @@
         <td><label for="pc">Pc</label></td>
         <td>
           <input type="number" name="pc"  id="pc" value="<?php echo $pc;?>" autocomplete="off">
-          <span class="error"><?php if(!testProduit($pc)){echo $produitLimite;}?></span>
+          <span class="error">
+          <?php 
+            if(!testProduit($pc)){
+              echo $produitLimite;
+            }
+          ?>
+          </span>
         </td>
       </tr>
       <tr>
         <td><label for="portable">Portable</label></td>
         <td>
           <input type="number" name="portable" id="portable" value="<?php echo $portable;?>" autocomplete="off">
-          <span class="error"><?php if(!testProduit($portable)){echo $produitLimite;}?></span>
+          <span class="error">
+          <?php 
+            if(!testProduit($portable)){
+              echo $produitLimite;
+            }
+          ?>
+          </span>
         </td>
       </tr>
       <tr>
         <td><label for="adresse">Adresse</label></td>
         <td>
           <input type="text" name="adresse" id="adresse" value="<?php echo $adresse;?>">
-          <span class="error"><?php echo $adresseVide; ?></span>
+          <span class="error">
+          <?php 
+            echo $adresseVide; 
+          ?>
+          </span>
         </td>
       </tr>
       <tfoot>
