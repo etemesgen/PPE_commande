@@ -27,7 +27,7 @@
 
     /**  Enovi de données vers la page concernée si tout est correct **/
     if(validerPanier($tablettes, $pc, $portable) && testAdresse($adresse)){
-      $commande = new Produit($tablettes, $pc, $portable, $adresse);
+      $commande = new Produit($tablettes, $pc, $portable, $adresse); //Créer un objet
       $_SESSION['commande'] = $commande;
       $_SESSION['time'] = date('d/m/Y, H:i');
       header('Location: validation_commande.php');
