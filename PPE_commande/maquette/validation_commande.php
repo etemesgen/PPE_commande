@@ -2,6 +2,8 @@
     require_once('./src/produits.inc.php');
     session_start();
     $commande = $_SESSION['commande'];
+
+    /** INSERTION DES RETOURS DES FONCTIONS SUR CETTE PAGE **/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +19,7 @@
         <section>
             <h2>Votre Commande du <?=$_SESSION['time']?></h2>
             <h3>Détail de votre commande:</h3>
-            <p>Nombre de produits: <?= $commande->getNbProduits();?></p>
+            <p>Nombre de produits: <?=$commande->getNbProduits();?></p>
             <ul>
                 <li><?=$commande->getTablettes()?> : Tablettes</li>
                 <li><?=$commande->getPc()?> : PC</li>

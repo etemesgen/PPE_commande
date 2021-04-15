@@ -12,11 +12,12 @@
 </head>
 <body>
 <?php
+  /** Définition des variables **/
+  $produitLimite = "Votre choix doit être entre 0 et 10 unités maximum ! </br>"; //Définir la limite des produits
+  $adresseVide = $panierVide = $adresse = $limiteTablettes = $limitePc = $limitePortable = ""; //Affichage rien si ces données sont bons
+  $pc = $tablettes = $portable = 0; //Valeur initiale
 
-  $produitLimite = "Votre choix doit être entre 0 et 10 unités maximum ! </br>";
-  $adresseVide = $panierVide = $adresse = $limiteTablettes = $limitePc = $limitePortable = "";
-  $pc = $tablettes = $portable = 0;
-
+  /** Vérification et initialisation des entrées du formulaire **/
   if(isset($_POST['tablettes'], $_POST['pc'], $_POST['portable'], $_POST['adresse'])){
     $tablettes = $_POST['tablettes'];
     $pc = $_POST['pc'];
@@ -24,19 +25,21 @@
     $adresse = $_POST['adresse'];
     $adresseVide = testAdresse($adresse) ? "" : "Ajouter une adresse !";
 
+    /**  Enovi de données vers la page concernée si tout est correct **/
     if(validerPanier($tablettes, $pc, $portable) && testAdresse($adresse)){
       $commande = new Produit($tablettes, $pc, $portable, $adresse);
       $_SESSION['commande'] = $commande;
       $_SESSION['time'] = date('d/m/Y, H:i');
       header('Location: validation_commande.php');
     }
-
+    /** Vérification des champs **/
     if(!validerPanier($tablettes,$pc,$portable)){
       $panierVide = "Votre panier est vide";
     }
 
   }
 
+  /** Fonctions / conditions permettant de définir un champ et sa valeur **/
   function testProduit($produit){
     return (0 <= $produit && $produit <= 10);
   }
@@ -70,7 +73,8 @@
         <td>
           <input type="number" name="tablettes" id="tablettes" value="<?php echo $tablettes;?>" autofocus autocomplete="off">
           <span class="error">
-            <?php 
+            <?php  
+            //Condition en cas du champ vide
               if(!testProduit($tablettes)){
                 echo $produitLimite;
               }
@@ -85,6 +89,7 @@
           <input type="number" name="pc"  id="pc" value="<?php echo $pc;?>" autocomplete="off">
           <span class="error">
           <?php 
+          //Condition en cas du champ vide
             if(!testProduit($pc)){
               echo $produitLimite;
             }
@@ -98,6 +103,7 @@
           <input type="number" name="portable" id="portable" value="<?php echo $portable;?>" autocomplete="off">
           <span class="error">
           <?php 
+            //Condition en cas du champ vide
             if(!testProduit($portable)){
               echo $produitLimite;
             }
@@ -111,6 +117,7 @@
           <input type="text" name="adresse" id="adresse" value="<?php echo $adresse;?>">
           <span class="error">
           <?php 
+            //Condition en cas du champ vide
             echo $adresseVide; 
           ?>
           </span>
